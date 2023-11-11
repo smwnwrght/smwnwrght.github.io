@@ -68,9 +68,9 @@ ul li {
 }
 
 ul > li::before {
-  content: '🞶 ';
+  content: '> ';
   color: var(--accentgray);
-  font-size: 12px;
+  font-size: 15px;
 }
 
 ol {
