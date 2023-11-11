@@ -26,8 +26,9 @@ body{
 }
 
 p {
-  font-family: 'Fira Sans', sans-serif;
-  line-height: 1.5;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 15px;
+  line-height: 1.6em;
 }
 
 hr {
@@ -56,9 +57,14 @@ a:hover {
 ul {
   list-style: none;
   padding-left: 2ch;
+
 }
 ul li {
   text-indent: -2ch;
+  color: #232333;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 15px;
+  line-height: 1.6em;
 }
 ul > li::before {
   content: '* ';
@@ -68,7 +74,7 @@ ul > li::before {
 /* Images */
 img {
   border: 3px solid #ececec;
-  height: 300px;
+  max-height: 300px;
   max-width: 100%;
 }
 
