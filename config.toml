@@ -1,4 +1,4 @@
 baseURL = 'https://blog.wnwrght.co.uk/'
 languageCode = 'en'
-title = 'sam wainwright | blog'
+title = "sam wainwright's blog"
 theme = "archie"
