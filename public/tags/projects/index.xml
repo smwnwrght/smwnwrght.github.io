@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>sam wainwright | blog</title>
-    <link>https://blog.wnwrght.co.uk/</link>
-    <description>Recent content on sam wainwright | blog</description>
+    <title>projects on sam wainwright | blog</title>
+    <link>https://blog.wnwrght.co.uk/tags/projects/</link>
+    <description>Recent content in projects on sam wainwright | blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 05 Nov 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://blog.wnwrght.co.uk/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.wnwrght.co.uk/tags/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>THE DAILY GRIND: AN IoT KG79 COFFEE GRINDER</title>
       <link>https://blog.wnwrght.co.uk/pages/post-1-coffee-grinder/</link>
