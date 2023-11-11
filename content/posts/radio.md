@@ -4,7 +4,7 @@ date: 2023-11-05
 draft: false
 description: '"Less is more" - Dieter Rams'
 tags: [projects]
-url: /kg79
+url: /radio
 ---
 
 *"Less is more" - Dieter Rams*
