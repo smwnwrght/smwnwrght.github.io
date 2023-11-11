@@ -68,6 +68,7 @@ ul > li::before {
 /* Images */
 img {
   border: 3px solid #ececec;
+  height: 300px;
   max-width: 100%;
 }
 
@@ -143,7 +144,9 @@ header {
 
 header .main {
   font-size: 1.5rem;
+  font-weight:  bold;
 }
+
 h1, h2, h3, h4, h5, h6 {
   font-size: 1.2rem;
   margin-top: 2em;
