@@ -1,4 +1,4 @@
-baseURL = 'blog.wnwrght.co.uk'
+baseURL = 'https://blog.wnwrght.co.uk/'
 languageCode = 'en'
 title = 'My New Hugo Site'
 theme = 'archie'
