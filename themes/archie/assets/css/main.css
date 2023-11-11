@@ -50,6 +50,7 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
 a:hover {
     background-color: var(--hovercolor);
 }
@@ -167,6 +168,10 @@ header {
 
 header .main {
   font-size: 15px;
+}
+
+.main a {
+  border-bottom: 3px solid #ddd;
 }
 
 h1, h2, h3, h4, h5, h6 {

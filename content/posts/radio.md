@@ -1,6 +1,6 @@
 ---
 title: "A RADIO THAT ONLY PLAYS RADIO 6"
-date: 2023-11-05
+date: 2023-11-11
 draft: false
 description: '"Less is more" - Dieter Rams'
 tags: [projects]
