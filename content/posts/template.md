@@ -1,7 +1,10 @@
 ---
-title: "Sample Blog Post"
-date: 2023-11-11T10:00:00+00:00
+title: "A RADIO THAT ONLY PLAYS RADIO 6"
+date: 1999-01-01
 draft: true
+description: ''
+tags: [projects]
+url: /template
 ---
 
 # Sample Blog Post

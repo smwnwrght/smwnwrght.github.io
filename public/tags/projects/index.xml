@@ -6,17 +6,28 @@
     <description>Recent content in projects on sam wainwright&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 05 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Nov 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.wnwrght.co.uk/tags/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A RADIO THAT ONLY PLAYS RADIO 6</title>
       <link>https://blog.wnwrght.co.uk/radio/</link>
-      <pubDate>Sun, 05 Nov 2023 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 11 Nov 2023 00:00:00 +0000</pubDate>
       <guid>https://blog.wnwrght.co.uk/radio/</guid>
       <description>&amp;ldquo;Less is more&amp;rdquo; - Dieter Rams
 Radio is amazing but sometimes you just want to listen to Radio 6 Music.
 This radio was made from
 a cheap second-hand DAB radio a white plastic ABS project box a potentiometer a latching on-off button It only plays one station: Radio 6 Music.</description>
+    </item>
+    <item>
+      <title>TEXT-A-TYPEWRITER</title>
+      <link>https://blog.wnwrght.co.uk/typestar/</link>
+      <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
+      <guid>https://blog.wnwrght.co.uk/typestar/</guid>
+      <description>Making a 1995 typewriter print out text messages.
+a text-receiving typewriter Typewriters are simultaneously beautiful, scrawl-replacing and nostalgia-inducing. I wanted to use on to print out SMS messages.
+the build choosing the typewriter In the mid to late 1980s, Casio briefly made a handful of absolutely beautiful machines called Typestars.
+The Canon Typestar single-handedly spans the narrow gap between
+mechanical (and electromechanical) typewriters, which would be too hard to interface with a SIM card chip, and word processors, which are completely hideous, bulky objects that died the death they deserved to.</description>
     </item>
     <item>
       <title>THE DAILY GRIND: AN IoT KG79 COFFEE GRINDER</title>

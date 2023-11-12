@@ -17,6 +17,6 @@ This radio was made from
 - a potentiometer
 - a latching on-off button
 
-![Radio 6 Music radio](/images/radio.jpeg)
+![Radio 6 Music radio](/images/radio/radio.jpeg)
 
 It only plays one station: Radio 6 Music.

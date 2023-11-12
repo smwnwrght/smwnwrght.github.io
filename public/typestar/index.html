@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html><head lang="en">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>TEXT-A-TYPEWRITER - sam wainwright&#39;s blog</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Making a 1995 electric typewriter print out text messages." />
+	<meta property="og:image" content=""/>
+	<meta property="og:title" content="TEXT-A-TYPEWRITER" />
+<meta property="og:description" content="Making a 1995 electric typewriter print out text messages." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.wnwrght.co.uk/typestar/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-04-20T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TEXT-A-TYPEWRITER"/>
+<meta name="twitter:description" content="Making a 1995 electric typewriter print out text messages."/>
+
+	
+        <link href="https://blog.wnwrght.co.uk/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://blog.wnwrght.co.uk/css/main.a13e714192918964f9187b1afddba104b080a2a274a7a9ad83a2a61068c8cdec.css" />
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://blog.wnwrght.co.uk/">sam wainwright&#39;s blog</a>
+	</div>
+	<nav>
+		
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">TEXT-A-TYPEWRITER</h1>
+			<div class="meta">Apr 20, 2022</div>
+		</div>
+		
+
+		<section class="body">
+			<p>Making a 1995 typewriter print out text messages.</p>
+<h1 id="a-text-receiving-typewriter">a text-receiving typewriter</h1>
+<p>Typewriters are simultaneously beautiful, scrawl-replacing and nostalgia-inducing. I wanted to use on to print out SMS messages.</p>
+<h2 id="the-build">the build</h2>
+<h3 id="choosing-the-typewriter">choosing the typewriter</h3>
+<p>In the mid to late 1980s, Casio briefly made a handful of absolutely beautiful machines called <em>Typestars</em>.</p>
+<p><img src="/images/typestar/manual.png" alt="Typestar"></p>
+<p>The Canon Typestar single-handedly spans the narrow gap between</p>
+<ul>
+<li><strong>mechanical (and electromechanical) typewriters</strong>, which would be too hard to interface with a SIM card chip, and</li>
+<li><strong>word processors</strong>, which are completely hideous, bulky objects that died the death they deserved to.</li>
+</ul>
+<p>It comes with a cassette of ink, but is equally suited to printing directly onto thermal paper (fax or receipt printer paper).</p>
+<h3 id="how-the-typewriter-works">how the typewriter works</h3>
+<p><img src="/images/typestar/circuit.jpeg" alt="Notebook"></p>
+<p>The Typestar has a clever multiplexing situation going on.</p>
+<p>The keyboard is connected via two ribbon cables.</p>
+<ul>
+<li>When you press the &lsquo;A&rsquo; button, a connection is made between <strong>wire 1 of ribbon 1</strong> and <strong>wire 1 of ribbon 2</strong>.</li>
+<li>Press &lsquo;B&rsquo; and <strong>wire 1 of ribbon 1</strong> is connected to <strong>wire <em>2</em> of ribbon 2</strong>.</li>
+</ul>
+<p>And so on as follows, covering every key of the keyboard</p>
+<pre tabindex="0"><code>      RIBBON 2
+      1 2 3 4 5 6 7 8 9 10
+
+R 1   a b c d e f g h
+I 2   i j k l m n o p
+B 3   q r s t u v w x
+B 4   y z
+O 5   6 5 3 4
+N 6   7 8 2   9
+~ 7   1
+1 8  
+</code></pre><p>I found this <a href="https://www.youtube.com/watch?v=42fLdTLuYj0">teardown video</a> helpful.</p>
+<h3 id="communicating-with-the-typewriter">communicating with the typewriter</h3>
+<p>To emulate this, I used an Arduino to activate transistors, one per wire, allowing current to flow between the wires. This required 2 sets of 8 transistors, one set PNP and the other NPN.</p>
+<p>To type an &lsquo;A&rsquo; I need to allow current to flow through two transistors: the one connected to <strong>ribbon 1 wire 1</strong> and <strong>ribbon 2 wire 1</strong>.</p>
+<p><img src="/images/typestar/idea.jpeg" alt="Idea"></p>
+<h3 id="completing-the-circuit">completing the circuit</h3>
+<p>The full typewriter communication circuit also required</p>
+<ul>
+<li><strong>some resistors</strong> - not sure why but this seemed to be the only way to get the transistors to work consistently</li>
+<li><strong>shift registers</strong> to provide more GPIO pins</li>
+<li><strong>the sim card reader</strong> which is a SIM900 dev board. This connects to the Arduino. There is a standard communications protocol for talking to SIM900 boards</li>
+<li><strong>a 12V-5V buck converter</strong> - whilst the Arduino can just run off the Typestar&rsquo;s 12V supply, the SIM900 needs 5V</li>
+</ul>
+<p><img src="/images/typestar/closeup.jpeg" alt="Circuit"></p>
+<h3 id="code">code</h3>
+<p>The code on the Arduino</p>
+<ul>
+<li>Receives the incoming message</li>
+<li>Cleans it up to generate the text</li>
+<li>Activates transistors in pairs to simulate keyboard button presses</li>
+<li>Presses enter to print the message</li>
+</ul>
+<h2 id="the-result">the result</h2>
+<p>This thing is now mounted to my wall and every so often I decide to write a shopping list on it.</p>
+<p><img src="/images/typestar/typestar.jpeg" alt="Typestar"></p>
+<h1 id="post-script">post-script</h1>
+<p>The medium an artist chooses mediates the communication of an idea. In doing so it has a huge impact on the artwork itself.</p>
+<p>In music too, recording and storage technology helps to define the sound of an era. Instruments were chosen that could be heard clearly on a gramophone; album length became defined by the space on an LP, cassette or CD; and while radio pushed track length down to 3 minutes, the number of tracks on an album is increasing to generate more Spotify streams.</p>
+<p>So how has technology affected our communication? Until recently you could either write a letter, call someone or see them in real life. SMS and emails were fairly recent additions to communication media but have been pretty much replaced with WhatsApp and DMs. One of the strangest outcomes is internet-era-born Gen Z won&rsquo;t pick up audio calls but prefer to speak by video.</p>
+<p>Maybe text-a-typewriter will bring new types of message into my life. Or maybe not.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/projects">projects</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+
+</div>
+    </body>
+</html>

@@ -20,7 +20,7 @@
 	
 
 	
-	<link rel="stylesheet" type="text/css" media="screen" href="https://blog.wnwrght.co.uk/css/main.e89086cf8ffbff5df8a8382bad754d7d2a3b1ccc8a7a4445f708281933bcb3e1.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://blog.wnwrght.co.uk/css/main.a13e714192918964f9187b1afddba104b080a2a274a7a9ad83a2a61068c8cdec.css" />
 
 	
 	
@@ -45,13 +45,13 @@
 	<article>
 		<div class="title">
 			<h1 class="title">THE DAILY GRIND: AN IoT KG79 COFFEE GRINDER</h1>
-			<div class="meta">Posted on Nov 5, 2020</div>
+			<div class="meta">Nov 5, 2020</div>
 		</div>
 		
 
 		<section class="body">
 			<p><em>Ground coffee is great. Grinding coffee is a pain.</em></p>
-<p><img src="/images/desk.jpeg" alt="messy desk"></p>
+<p><img src="/images/kg79/desk.jpeg" alt="messy desk"></p>
 <p>Having hand-ground coffee daily for years I was in the market for something quicker.</p>
 <p>The <a href="https://www.delonghi.com/en-gb/kg79-kg-series-grinder/p/KG79">Delonghi KG79</a> is ideal in its price range</p>
 <ul>
@@ -77,14 +77,14 @@
 <h2 id="build-along-at-home">build along at home</h2>
 <h3 id="1-understand-the-circuitboard">1. understand the circuitboard</h3>
 <p>After a bit of studying the circuitboard, and shorting pins at random on the main microchip, I found that bridging the switch seemed to make the grinder believe the button had been pressed.</p>
-<p><img src="/images/circuitboard.jpeg" alt="KG79 circuitboard"></p>
+<p><img src="/images/kg79/circuitboard.jpeg" alt="KG79 circuitboard"></p>
 <h3 id="2-short-circuit-with-a-transistor">2. short-circuit with a transistor</h3>
 <p>I wanted to control this using a Raspberry Pi. I only need one GPIO pin and an internet connection, so Pi Zero W was the obvious choice.</p>
-<p><img src="/images/breadboard.jpeg" alt="breadboarding"></p>
+<p><img src="/images/kg79/breadboard.jpeg" alt="breadboarding"></p>
 <p>Setting this up involved doing it headless over SSH which was a pain to learn for the first time.</p>
 <h3 id="3-use-the-pi-to-bridge-the-pins">3. use the pi to bridge the pins</h3>
 <p>I used an 2N2222 transistor to bridge the microchip pins, and the Pi to activate the transistor.</p>
-<p><img src="/images/pi.jpeg" alt="Pi Zero W"></p>
+<p><img src="/images/kg79/pi.jpeg" alt="Pi Zero W"></p>
 <p>A transistor is pretty much an electronically activated switch. A transistor has three legs:</p>
 <ol>
 <li>Collector</li>
@@ -92,10 +92,10 @@
 <li>Emitter</li>
 </ol>
 <p>When it receives voltage from the Pi on the Base leg, it allows current to pass from the Collector to the Emitter. In other words, the Pi has &lsquo;closed the switch&rsquo;.</p>
-<p><img src="/images/bridge.jpeg" alt="bridging"></p>
+<p><img src="/images/kg79/bridge.jpeg" alt="bridging"></p>
 <h3 id="4-build-a-flask-app">4. build a flask app</h3>
 <p>I used <a href="flask.palletsprojects.com">Flask</a> to build a basic HTML page based on an HTML form. The button is built in CSS, and when it is clicked it updates a value in the HTML form using javascript.</p>
-<p><img src="/images/interface.png" alt="interface"></p>
+<p><img src="/images/kg79/interface.png" alt="interface"></p>
 <p>This form is hidden from the user, apart from the &lsquo;grind&rsquo; button which submits the form. The Pi receives this as a POST API call that contains the grindTime set by the dial.</p>
 <p>I set the Pi to have a static IP address 192.168.1.100. This means the flask interface can be accessed by any device on my local network by navigating to the IP. I also set a redirect from my website sam.wnwrght.co.uk/coffee so that I can share this link via whatsapp when I have guests.</p>
 <h3 id="5-use-a-python-script-to-control-the-grinder">5. use a python script to control the grinder</h3>
@@ -103,12 +103,12 @@
 <p>Then it &lsquo;presses the button&rsquo; again to stop the grinder.</p>
 <h3 id="6-power-the-pi-from-ac">6. power the pi from ac</h3>
 <p>I used an AC-DC 220V to 5V Power Supply module to power the Pi directly off the AC that drives the grinder.</p>
-<p><img src="/images/AC-DC.jpeg" alt="AC-DC"></p>
+<p><img src="/images/kg79/AC-DC.jpeg" alt="AC-DC"></p>
 <h3 id="7-grind-coffee-from-bed">7. grind coffee from bed</h3>
 <p>Self-explanatory step.</p>
 <h2 id="result">result</h2>
 <p>A fantastic IoT coffee grinder.</p>
-<p><img src="/images/KG79.jpeg" alt="grinder"></p>
+<p><img src="/images/kg79/KG79.jpeg" alt="grinder"></p>
 <h1 id="update-11-nov-2023">update 11 Nov 2023</h1>
 <p>Despite what the Raspberry Pi foundation might want you to think, IoT doesn&rsquo;t solve all problems.</p>
 <p>The KG79 sheds grounds all over the place. I put it on a tray, but there are various Thingiverse objects that solve this problem, like:</p>
