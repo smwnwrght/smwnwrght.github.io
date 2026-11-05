@@ -1,7 +1,7 @@
 ---
 title: "WE ARE DEFINITELY WRONG ABOUT THE AGE OF THE UNIVERSE"
 date: 2026-11-05
-draft: true
+draft: false
 description: "There are two methods for calculating the age of the universe. Not only do they disagree, the disagreement is growing."
 tags: [science]
 url: /age
@@ -63,8 +63,6 @@ That number was a problem even then. A crude estimation of the age of the univer
 Radioactive dating of rocks already showed Earth was older than 2 billion years (estimates at the time were over 3 billion).
 
 Hubble had used Hertzsprung and Shapley’s geometric calibration to estimate the distance of very dim cepheids from their apparent luminosity. But he had mistaken bright star-forming regions for individual stars, and so had underestimated how far away galaxies were, leading to an over-estimate of the Hubble Constant.
-
----
 
 # Stairway to heaven
 
