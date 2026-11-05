@@ -3,8 +3,8 @@ title: "WE ARE DEFINITELY WRONG ABOUT THE AGE OF THE UNIVERSE"
 date: 2026-11-05
 draft: true
 description: "There are two methods for calculating the age of the universe. Not only do they disagree, the disagreement is growing."
-tags: [projects]
-url: /kg79
+tags: [science]
+url: /age
 ---
   
 *There are two methods for calculating the age of the universe. Not only do they disagree, the disagreement is growing.*
