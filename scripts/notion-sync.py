@@ -20,33 +20,44 @@ HEADERS = {
     'Notion-Version': '2022-06-28',
     'Content-Type': 'application/json'
 }
+def check(response):
+    """raise_for_status, but show Notion's explanation first"""
+    if not response.ok:
+        print(f'Notion API {response.status_code}: {response.text}')
+    response.raise_for_status()
+    return response
+
+
 def query_database():
     """Fetch all published posts from Notion"""
+    # Read the schema so the filter matches the real property types
+    schema = check(requests.get(f'{NOTION_API}/databases/{DATABASE_ID}', headers=HEADERS)).json()
+    props = schema['properties']
+    print('Database properties: ' + ', '.join(f"{k} ({v['type']})" for k, v in props.items()))
+
+    status = props.get('Status')
+    if not status or status['type'] not in ('status', 'select'):
+        raise RuntimeError("No usable 'Status' property (need type 'status' or 'select')")
+
+    data = {'filter': {'property': 'Status', status['type']: {'equals': 'Published'}}}
+    sort_prop = next((n for n in ('Published Date', 'Date') if props.get(n, {}).get('type') == 'date'), None)
+    if sort_prop:
+        data['sorts'] = [{'property': sort_prop, 'direction': 'descending'}]
+
+    results = []
     url = f'{NOTION_API}/databases/{DATABASE_ID}/query'
-    # Only fetch published posts
-    data = {
-        'filter': {
-            'property': 'Status',
-            'select': {
-                'equals': 'Published'
-            }
-        },
-        'sorts': [
-            {
-                'property': 'Published Date',
-                'direction': 'descending'
-            }
-        ]
-    }
-    response = requests.post(url, headers=HEADERS, json=data)
-    response.raise_for_status()
-    return response.json()['results']
+    while True:
+        body = check(requests.post(url, headers=HEADERS, json=data)).json()
+        results.extend(body['results'])
+        if not body.get('has_more'):
+            return results
+        data['start_cursor'] = body['next_cursor']
+
+
 def get_page_content(page_id):
     """Fetch all blocks from a Notion page"""
     url = f'{NOTION_API}/blocks/{page_id}/children'
-    response = requests.get(url, headers=HEADERS)
-    response.raise_for_status()
-    return response.json()['results']
+    return check(requests.get(url, headers=HEADERS)).json()['results']
 def notion_to_markdown(blocks):
     """Convert Notion blocks to markdown"""
     markdown = []
