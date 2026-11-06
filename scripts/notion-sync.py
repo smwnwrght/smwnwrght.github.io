@@ -4,9 +4,11 @@ Sync Notion database to Hugo markdown files
 Converts Notion blocks to Hugo-compatible markdown
 """
 
+import mimetypes
 import os
 import re
 import requests
+from urllib.parse import urlparse
 from datetime import datetime
 from pathlib import Path
 # Configuration from environment variables
@@ -58,8 +60,36 @@ def get_page_content(page_id):
     """Fetch all blocks from a Notion page"""
     url = f'{NOTION_API}/blocks/{page_id}/children'
     return check(requests.get(url, headers=HEADERS)).json()['results']
-def notion_to_markdown(blocks):
-    """Convert Notion blocks to markdown"""
+IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.avif'}
+
+
+def download_image(url, block_id, post_dir):
+    """Download an image into the post's folder and return its filename.
+
+    Notion-hosted image URLs expire after about an hour, so the file has to be
+    copied into the repo. The name comes from the Notion block id so it stays
+    the same between syncs. No Notion auth header is sent (the URLs are
+    pre-signed S3 links and reject extra credentials).
+    """
+    response = requests.get(url, timeout=60)
+    response.raise_for_status()
+    ext = os.path.splitext(urlparse(url).path)[1].lower()
+    if ext not in IMAGE_EXTENSIONS:
+        content_type = response.headers.get('Content-Type', '').split(';')[0].strip()
+        ext = mimetypes.guess_extension(content_type) or '.png'
+        ext = {'.jpe': '.jpg'}.get(ext, ext)
+    filename = f"image-{block_id.replace('-', '')[:12]}{ext}"
+    post_dir.mkdir(parents=True, exist_ok=True)
+    (post_dir / filename).write_bytes(response.content)
+    return filename
+
+
+def notion_to_markdown(blocks, post_dir=None, images=None):
+    """Convert Notion blocks to markdown.
+
+    Images are downloaded into post_dir (if given); their filenames are added
+    to the `images` set so stale ones can be cleaned up afterwards.
+    """
     markdown = []
     for block in blocks:
         block_type = block['type']
@@ -96,10 +126,21 @@ def notion_to_markdown(blocks):
             markdown.append(f'> {text}\n')
         # Images
         elif block_type == 'image':
-            url = block['image'].get('file', {}).get('url') or \
-                  block['image'].get('external', {}).get('url')
+            image = block['image']
+            url = image.get('file', {}).get('url') or \
+                  image.get('external', {}).get('url')
             if url:
-                caption = rich_text_to_markdown(block['image'].get('caption', []))
+                if post_dir is not None:
+                    try:
+                        url = download_image(url, block['id'], post_dir)
+                        if images is not None:
+                            images.add(url)
+                    except Exception as e:
+                        if 'file' in image:
+                            # Notion-hosted links expire, so don't publish one
+                            raise RuntimeError(f'could not download image: {e}')
+                        print(f'  ! could not download external image, linking to it instead: {e}')
+                caption = rich_text_to_markdown(image.get('caption', []))
                 alt_text = caption if caption else 'Image'
                 markdown.append(f'![{alt_text}]({url})\n')
         # Divider
@@ -167,7 +208,7 @@ def extract_properties(page):
     return {
         'title': title,
         'date': date,
-        'slug': slug,
+        'slug': re.sub(r'[^A-Za-z0-9_-]+', '-', slug).strip('-'),
         'description': description,
         'tags': tags,
         'category': category
@@ -175,8 +216,9 @@ def extract_properties(page):
 def create_hugo_post(page_id, properties, content):
     """Create Hugo markdown file with front matter"""
     slug = properties['slug']
-    filename = f"{slug}.md"
-    filepath = Path(OUTPUT_DIR) / filename
+    # Page bundle: content/posts/<slug>/index.md with the post's images beside it
+    filename = f"{slug}/index.md"
+    filepath = Path(OUTPUT_DIR) / slug / 'index.md'
     # Build front matter
     tags_str = ', '.join([f'"{tag}"' for tag in properties['tags']])
     front_matter = f"""---
@@ -193,6 +235,11 @@ draft: false
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(front_matter)
         f.write(content)
+    # Remove the old flat file from before posts were bundles, or Hugo sees two pages
+    legacy = Path(OUTPUT_DIR) / f'{slug}.md'
+    if legacy.exists():
+        legacy.unlink()
+        print(f'  removed old {legacy.name}')
     print(f'✓ Created: {filename}')
     return filename
 def sync():
@@ -213,7 +260,16 @@ def sync():
             properties = extract_properties(page)
             # Fetch content
             blocks = get_page_content(page['id'])
-            content = notion_to_markdown(blocks)
+            if not properties['slug']:
+                raise ValueError('page has no title or slug')
+            post_dir = Path(OUTPUT_DIR) / properties['slug']
+            images = set()
+            content = notion_to_markdown(blocks, post_dir, images)
+            # Drop images this post no longer uses
+            if post_dir.exists():
+                for old in post_dir.glob('image-*'):
+                    if old.name not in images:
+                        old.unlink()
             # Create Hugo post
             create_hugo_post(page['id'], properties, content)
             synced += 1
