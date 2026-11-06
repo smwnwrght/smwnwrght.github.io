@@ -6,7 +6,7 @@ tags: []
 categories: ["Uncategorized"]
 draft: false
 notion_id: "410ed4a0-c125-803d-866f-ec750eda6f43"
-notion_edited: "2026-11-06T16:04:00.000Z"
+notion_edited: "2026-11-06T16:05:00.000Z"
 ---
 *There are two methods for calculating the age of the universe. Not only do they disagree, the disagreement is growing.*
 
@@ -236,7 +236,7 @@ Things like* sterile neutrinos*, *dark radiation*, or *early dark energy *could 
 
 ---
 
-## *Addendum: a single BAO sphere
+## Addendum: a single BAO sphere
 
 The BAO method is fundamentally statistical: it measures a pattern rather than individual spheres. In other words the pattern is more like the ripples from a handful of gravel hitting a pond than lots of single pebbles.
 
