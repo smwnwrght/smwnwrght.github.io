@@ -4,6 +4,7 @@ Sync Notion database to Hugo markdown files
 Converts Notion blocks to Hugo-compatible markdown
 """
 
+import hashlib
 import mimetypes
 import os
 import re
@@ -67,7 +68,7 @@ def download_image(url, block_id, post_dir):
     """Download an image into the post's folder and return its filename.
 
     Notion-hosted image URLs expire after about an hour, so the file has to be
-    copied into the repo. The name comes from the Notion block id so it stays
+    copied into the repo. The name is a hash of the Notion block id so it stays
     the same between syncs. No Notion auth header is sent (the URLs are
     pre-signed S3 links and reject extra credentials).
     """
@@ -78,7 +79,9 @@ def download_image(url, block_id, post_dir):
         content_type = response.headers.get('Content-Type', '').split(';')[0].strip()
         ext = mimetypes.guess_extension(content_type) or '.png'
         ext = {'.jpe': '.jpg'}.get(ext, ext)
-    filename = f"image-{block_id.replace('-', '')[:12]}{ext}"
+    # Hash the whole id: blocks created together share a long id prefix
+    digest = hashlib.sha1(block_id.encode()).hexdigest()[:12]
+    filename = f"image-{digest}{ext}"
     post_dir.mkdir(parents=True, exist_ok=True)
     (post_dir / filename).write_bytes(response.content)
     return filename
