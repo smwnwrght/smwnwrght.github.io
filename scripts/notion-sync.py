@@ -5,10 +5,12 @@ Converts Notion blocks to Hugo-compatible markdown
 """
 
 import hashlib
+import json
 import mimetypes
 import os
 import re
 import requests
+import shutil
 from urllib.parse import urlparse
 from datetime import datetime
 from pathlib import Path
@@ -32,7 +34,7 @@ def check(response):
 
 
 def query_database():
-    """Fetch all published posts from Notion"""
+    """Fetch every (non-archived) page in the database, whatever its status"""
     # Read the schema so the filter matches the real property types
     schema = check(requests.get(f'{NOTION_API}/databases/{DATABASE_ID}', headers=HEADERS)).json()
     props = schema['properties']
@@ -42,7 +44,7 @@ def query_database():
     if not status or status['type'] not in ('status', 'select'):
         raise RuntimeError("No usable 'Status' property (need type 'status' or 'select')")
 
-    data = {'filter': {'property': 'Status', status['type']: {'equals': 'Published'}}}
+    data = {}
     sort_prop = next((n for n in ('Published Date', 'Date') if props.get(n, {}).get('type') == 'date'), None)
     if sort_prop:
         data['sorts'] = [{'property': sort_prop, 'direction': 'descending'}]
@@ -53,14 +55,72 @@ def query_database():
         body = check(requests.post(url, headers=HEADERS, json=data)).json()
         results.extend(body['results'])
         if not body.get('has_more'):
-            return results
+            return [p for p in results if not p.get('archived') and not p.get('in_trash')]
         data['start_cursor'] = body['next_cursor']
 
 
 def get_page_content(page_id):
-    """Fetch all blocks from a Notion page"""
+    """Fetch all blocks from a Notion page (Notion returns at most 100 per request)"""
     url = f'{NOTION_API}/blocks/{page_id}/children'
-    return check(requests.get(url, headers=HEADERS)).json()['results']
+    params = {'page_size': 100}
+    blocks = []
+    while True:
+        body = check(requests.get(url, headers=HEADERS, params=params)).json()
+        blocks.extend(body['results'])
+        if not body.get('has_more'):
+            return blocks
+        params['start_cursor'] = body['next_cursor']
+
+
+def page_status(page):
+    """Name of the page's Status (works for both 'status' and 'select' properties)"""
+    prop = page['properties'].get('Status') or {}
+    value = prop.get(prop.get('type')) or {}
+    return value.get('name')
+
+
+def read_front_matter(path):
+    """The simple `key: value` lines of a post's front matter, as a dict"""
+    try:
+        text = path.read_text(encoding='utf-8')
+    except OSError:
+        return {}
+    parts = text.split('---', 2)
+    if not text.startswith('---') or len(parts) < 3:
+        return {}
+    fields = {}
+    for line in parts[1].splitlines():
+        key, sep, value = line.partition(':')
+        if sep:
+            fields[key.strip()] = value.strip().strip('"')
+    return fields
+
+
+def find_managed_posts():
+    """Posts this script created, found by the notion_id in their front matter.
+
+    Hand-written posts have no notion_id, so they are never touched.
+    """
+    managed = {}
+    for path in Path(OUTPUT_DIR).glob('*/index.md'):
+        notion_id = read_front_matter(path).get('notion_id')
+        if notion_id:
+            managed[notion_id] = path
+    return managed
+
+
+def mark_draft(path):
+    """Set draft: true in a post's front matter, keeping everything else. True if it changed."""
+    text = path.read_text(encoding='utf-8')
+    parts = text.split('---', 2)
+    new_front = re.sub(r'^draft:.*$', 'draft: true', parts[1], flags=re.M)
+    if new_front == parts[1]:
+        return False
+    parts[1] = new_front
+    path.write_text('---'.join(parts), encoding='utf-8')
+    return True
+
+
 IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.avif'}
 
 
@@ -223,14 +283,16 @@ def create_hugo_post(page_id, properties, content):
     filename = f"{slug}/index.md"
     filepath = Path(OUTPUT_DIR) / slug / 'index.md'
     # Build front matter
-    tags_str = ', '.join([f'"{tag}"' for tag in properties['tags']])
+    # json.dumps gives valid YAML strings, so quotes in a title can't break the build
     front_matter = f"""---
-title: "{properties['title']}"
+title: {json.dumps(properties['title'], ensure_ascii=False)}
 date: {properties['date']}
-description: "{properties['description']}"
-tags: [{tags_str}]
-categories: ["{properties['category']}"]
+description: {json.dumps(properties['description'], ensure_ascii=False)}
+tags: {json.dumps(properties['tags'], ensure_ascii=False)}
+categories: {json.dumps([properties['category']], ensure_ascii=False)}
 draft: false
+notion_id: "{page_id}"
+notion_edited: "{properties['edited']}"
 ---
 """
     # Write file
@@ -248,24 +310,45 @@ draft: false
 def sync():
     """Main sync function"""
     print('🔄 Syncing Notion to Hugo...\n')
-    # Fetch published posts
+    # FORCE_SYNC=1 rebuilds every post; otherwise unchanged pages are skipped
+    force = os.environ.get('FORCE_SYNC') == '1'
     try:
         pages = query_database()
-        print(f'Found {len(pages)} published posts\n')
     except Exception as e:
         print(f'❌ Error querying database: {e}')
         raise SystemExit(1)
-    synced = 0
-    errors = 0
+    published = sum(1 for p in pages if page_status(p) == 'Published')
+    print(f'Found {len(pages)} pages in Notion, {published} published\n')
+
+    managed = find_managed_posts()
+    seen = set()
+    synced = skipped = drafted = errors = 0
     for page in pages:
+        page_id = page['id']
+        seen.add(page_id)
+        existing = managed.get(page_id)
         try:
-            # Extract properties
+            # No longer Published: keep the file but hide it from the site
+            if page_status(page) != 'Published':
+                if existing and mark_draft(existing):
+                    print(f'⏸ Unpublished: {existing.parent.name}')
+                    drafted += 1
+                continue
+
             properties = extract_properties(page)
-            # Fetch content
-            blocks = get_page_content(page['id'])
             if not properties['slug']:
                 raise ValueError('page has no title or slug')
+            properties['edited'] = page['last_edited_time']
             post_dir = Path(OUTPUT_DIR) / properties['slug']
+
+            # Unchanged since the last sync: nothing to do
+            if not force and existing == post_dir / 'index.md':
+                front = read_front_matter(existing)
+                if front.get('notion_edited') == properties['edited'] and front.get('draft') == 'false':
+                    skipped += 1
+                    continue
+
+            blocks = get_page_content(page_id)
             images = set()
             content = notion_to_markdown(blocks, post_dir, images)
             # Drop images this post no longer uses
@@ -273,17 +356,34 @@ def sync():
                 for old in post_dir.glob('image-*'):
                     if old.name not in images:
                         old.unlink()
-            # Create Hugo post
-            create_hugo_post(page['id'], properties, content)
+            create_hugo_post(page_id, properties, content)
+            # Slug changed: remove the old copy so the post isn't duplicated
+            if existing and existing.parent != post_dir:
+                shutil.rmtree(existing.parent)
+                print(f'  renamed from {existing.parent.name}')
             synced += 1
         except Exception as e:
             print(f'✗ Error processing page: {e}')
             errors += 1
+
+    # Posts whose Notion page was deleted or archived: hide them too.
+    # Skipped when Notion returned nothing at all, which looks more like a
+    # permissions problem than someone deleting every post.
+    if pages:
+        for page_id, path in managed.items():
+            if page_id not in seen and mark_draft(path):
+                print(f'⏸ Removed from Notion: {path.parent.name}')
+                drafted += 1
+    elif managed:
+        print('⚠ Notion returned no pages; leaving existing posts alone')
+
     print(f'\n✅ Sync complete!')
-    print(f'   Synced: {synced} posts')
+    print(f'   Synced: {synced} posts, unchanged: {skipped}, unpublished: {drafted}')
     if errors > 0:
         print(f'   Errors: {errors} posts')
         raise SystemExit(1)
+
+
 if __name__ == '__main__':
     # Validate environment variables
     if not NOTION_TOKEN:

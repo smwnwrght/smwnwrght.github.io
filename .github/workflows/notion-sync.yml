@@ -35,6 +35,8 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          # Hourly runs skip unchanged pages; manual runs and script changes rebuild everything
+          FORCE_SYNC: ${{ github.event_name == 'schedule' && '0' || '1' }}
         run: |
           python scripts/notion-sync.py
       - name: Check for changes
