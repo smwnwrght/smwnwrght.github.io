@@ -11,6 +11,10 @@ on:
     paths:
       - '.github/workflows/notion-sync.yml'
       - 'scripts/notion-sync.py'
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -36,7 +40,10 @@ jobs:
       - name: Check for changes
         id: verify_diff
         run: |
-          git diff --quiet content/posts/ || echo "changed=true" >> $GITHUB_OUTPUT
+          # git status (not git diff) so newly created, untracked posts count too
+          if [ -n "$(git status --porcelain content/posts/)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
       - name: Commit and push if changed
         if: steps.verify_diff.outputs.changed == 'true'
         run: |
@@ -45,3 +52,9 @@ jobs:
           git add content/posts/
           git commit -m "🔄 Sync from Notion"
           git push
+      - name: Trigger site deploy
+        # Pushes made with GITHUB_TOKEN don't trigger other workflows, so dispatch the deploy explicitly
+        if: steps.verify_diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run hugo.yaml --ref main
