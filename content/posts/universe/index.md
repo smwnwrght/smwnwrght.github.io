@@ -6,7 +6,7 @@ tags: []
 categories: ["Uncategorized"]
 draft: false
 notion_id: "410ed4a0-c125-803d-866f-ec750eda6f43"
-notion_edited: "2026-11-06T16:05:00.000Z"
+notion_edited: "2026-11-06T16:16:00.000Z"
 ---
 *There are two methods for calculating the age of the universe. Not only do they disagree, the disagreement is growing.*
 
@@ -214,7 +214,7 @@ The two methods disagree on H₀ by around 8%, and this propagates to their resp
 
 ![Image](image-eae0569bdf63.png)
 
-*Image: Yikes! This looks important! And complicated! The integral is close to 1 so the Hubble time factor H₀^-1 in front sets the scale of the age of the universe.*
+*Image: Yikes! This looks important! And complicated! The integral is close to 1 so the Hubble time factor 1/H₀ in front sets the scale of the age of the universe.*
 
 ## Where next?
 
