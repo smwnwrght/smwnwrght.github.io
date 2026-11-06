@@ -26,7 +26,7 @@ The 16 variable stars Leavitt measured were all in the same group of stars, the 
 
 Her conclusion was a remarkable *"period-luminosity relation"* — the longer the period, or time, from a Cepheid's maximum brightness to minimum and back to maximum, the greater the intrinsic luminosity of the star.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-d39e3aa7f26c.png)
 
 *Image: Plot from a *[*paper *](https://articles.adsabs.harvard.edu/pdf/1912HarCi.173....1L)*prepared by Leavitt in 1912. Magnitude vs log period of 25 cepheids. There are two trend lines showing the maximum and minimum brightness for each Cepheid.*
 
@@ -40,7 +40,7 @@ Using the 100-inch Hooker Telescope, the world’s largest at the time, Edwin Hu
 
 Hubble directed his assistant Milton Humason to measured the red-shift in the spectra of light from their galaxies. And in 1929 paper, Hubble published a paper which provided evidence of a very important relation: that the furthest objects were moving the fastest.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-969d8a6ae30c.png)
 
 We now know this relation between velocity and distance as the Hubble Constant, H₀.
 
@@ -74,7 +74,7 @@ As we saw earlier, Levitt’s discovery of cepheid variables as pulsating stars,
 
 These distance can be measured by observing how star clusters that include cepheids move across the sky in a parallax effect as the Earth rotates around the Sun. The star clusters used are normally quite close to us — usually within the Milky Way. The distance of these star clusters from Earth can then be estimated trigonometrically.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-a56fe389aef7.png)
 
 *Image: ESA*
 
@@ -86,7 +86,7 @@ Using the mathematical relationship established in the first rung between a Ceph
 
 A Type Ia supernova is the thermonuclear explosion of a white dwarf in a binary system. After taking into account their width and colour, Type 1a supernovae are good standard candles, i.e. always approximately the same inherent luminosity.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-86a487bc7bd1.png)
 
 *Image: Hubble Space Telescope images of galaxies that are hosts to both Cepheid variables and Type 1a supernovae. Credit: *[*NASA*](https://science.nasa.gov/mission/hubble/science/science-behind-the-discoveries/hubble-constant-and-tension/)*, ESA, Adam G. Riess (STScI, JHU)*
 
@@ -98,7 +98,7 @@ Using the knowledge of a Type 1a supernova’s inherent luminosity, it is possib
 
 And finally, by comparing the distance of the supernovae with their speed calculated from redshift, scientists can do what Hubble did and make new estimates of the Hubble Constant.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-7624d3a8ccce.png)
 
 *Image: The SH0ES distance ladder. Green: geometry calibrates cepheid magnitude. Blue: Cepheid magnitude calibrates SN1a magnitude. Red: SN1a magnitude calibrates SN1a distance. The distance-redshift relation provides H0. Credit: Reiss 2024*
 
@@ -112,11 +112,11 @@ Probably the most important recent distance ladder H0 determination [published](
 
 The CMB was discovered by accident in 1964 at Bell Labs using a horn antenna built to detect radio waves bounced off Echo balloon satellites. Their attempts to remove all interference from their receiver included cooling the receiver to 4 Kelvin with liquid helium and famously removing some pigeons and their accumulated droppings from the antenna.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-3aaa55787d2c.png)
 
 *Image: The *[*Holmdel Horn Antenna*](https://en.wikipedia.org/wiki/Holmdel_Horn_Antenna)* on which Penzias and Wilson discovered the cosmic microwave background. *[*NASA*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Horn_Antenna-in_Holmdel,_New_Jersey_-_restoration1.jpg)
 
-![Image](image-410ed4a0c125.png)
+![Image](image-88e20098e497.png)
 
 *A pigeon trap, on view at the Air and Space Museum, used by Nobel Prize winners Penzias and Wilson to remove the birds roosting in the radio antenna's large horn. NASM/*[*SI*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Horn_Antenna-in_Holmdel,_New_Jersey_-_restoration1.jpg)*, Loan from Robert Wilson*
 
@@ -124,7 +124,7 @@ But no matter what they did they couldn’t suppress a low, steady, mysterious n
 
 And this light can provide another way to measure distances in the sky, infer the Hubble Constant, and estimate the age of the universe.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-17fff6457d31.png)
 
 *Image: *[*CMB*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Cosmic_Microwave_Background_(CMB).jpeg.jpeg))* measured by the Planck spacecraft *
 
@@ -138,11 +138,11 @@ The CMB temperature was about [2892 K at the drag epoch, compared with 2.7255 K 
 
 And those ripples have been detected. Looking deep into space, cosmologists can find statistical evidence that pairs of galaxies are more likely to be found at a certain distance ‘r’. In other words, the pattern of ripples present at the time of recombination *has *persisted in the matter of the universe. These ripples are called Baryon Acoustic Oscillations, BAO, and they are a very useful in constraining the value of H0 using the CMB.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-65481aacb768.png)
 
 *Image: Illustration of what the BAO ‘bubbles’ of galaxies. They don’t really looks like this, but they are detectable statistically. A single BAO bubble has potentially been identified, named Ho`oleilana. As the Universe expands, this characteristic distance expands too, allowing us to measure the Hubble constant as well as the dark matter density and even the scalar spectral index. *[*Credit*](https://www.sdss3.org/press/onepercent.php)*: Zosia Rostomian, LBNL*
 
-![Image](image-410ed4a0c125.png)
+![Image](image-3429b5906e8d.png)
 
 *Image: The bump in the middle of the correlation function shows that galaxy pairs have an increased likelihood to be found at a certain distance ‘r’. This distance is the radius of the sound horizon with expansion taken into account, which is determined from the temperature change of the CMB since recombination.*
 
@@ -154,7 +154,7 @@ Astrophysicists can use this data to build a 3D map of the universe. Two measure
 
 Using these in combination it is possible to then build up a 3D map which maximises the correlation of galaxy pairs being at the expanded sound horizon distance 147 Mpc*.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-a47b03fe344f.png)
 
 *Image: The BAO sound horizon scale can be thought of as a ‘standard ruler’.* *Although the light from the galaxy surveys is from an earlier, less expanded universe as distance increases, the 3D map plots the bias as being 147 Mpc, so the galaxies are located on the map ‘where they are today’. This idea is called using comoving units. Credit: Ángel López-Sánchez, Australian Astronomical Observatory/Macquarie University.*
 
@@ -176,13 +176,13 @@ The only problem is, they disagree with each other. Each of them reports an erro
 
 And it’s getting worse: the more precise our measurements of either the local or CMB, the more narrowly constrained the measurements get, and the less they look like they agree.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-7da0d366f1fb.png)
 
 *Image: Hubble tension is increasing with time. Credit: Perivolaropoulos and Skara *
 
 And these values are repeatable: direct measurements tend to clump around 73 km/s/Mpc, and surveys of the early universe tend to clump around 67 km/s/Mpc.
 
-![Image](image-410ed4a0c125.png)
+![Image](image-5af70a07ebc4.png)
 
 *Image: *[*Summary of H0 estimates circa 2025*](https://en.wikipedia.org/wiki/Hubble%27s_law#/media/File:1-s2.0-S221268642500158X-gr1_lrg.jpg)
 
