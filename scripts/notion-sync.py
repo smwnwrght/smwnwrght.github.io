@@ -147,6 +147,31 @@ def download_image(url, block_id, post_dir):
     return filename
 
 
+LIST_TYPES = {'bulleted_list_item': '-', 'numbered_list_item': '1.'}
+INDENT = '    '
+
+
+def list_item_to_markdown(block, post_dir, images, depth=0):
+    """One list item, plus any nested items/paragraphs Notion stores as its children.
+
+    Notion's block listing does not include children, so they are fetched here.
+    """
+    marker = LIST_TYPES[block['type']]
+    lines = [f"{INDENT * depth}{marker} {rich_text_to_markdown(block[block['type']]['rich_text'])}"]
+    if block.get('has_children'):
+        for child in get_page_content(block['id']):
+            if child['type'] in LIST_TYPES:
+                lines.append(list_item_to_markdown(child, post_dir, images, depth + 1))
+            else:
+                # e.g. a paragraph or image inside a bullet: needs a blank line and indent
+                body = notion_to_markdown([child], post_dir, images).strip('\n')
+                if body:
+                    lines.append('')
+                    lines.extend(f"{INDENT * (depth + 1)}{line}" if line else '' for line in body.split('\n'))
+                    lines.append('')
+    return '\n'.join(lines)
+
+
 def notion_to_markdown(blocks, post_dir=None, images=None):
     """Convert Notion blocks to markdown.
 
@@ -154,8 +179,14 @@ def notion_to_markdown(blocks, post_dir=None, images=None):
     to the `images` set so stale ones can be cleaned up afterwards.
     """
     markdown = []
+    prev_type = None
     for block in blocks:
         block_type = block['type']
+        # Consecutive items of the same list stay together (no blank line between
+        # them), otherwise markdown renders a "loose" list with a paragraph per item
+        if block_type in LIST_TYPES and block_type == prev_type and markdown:
+            markdown[-1] = markdown[-1].rstrip('\n')
+        prev_type = block_type
         # Paragraph
         if block_type == 'paragraph':
             text = rich_text_to_markdown(block['paragraph']['rich_text'])
@@ -172,21 +203,18 @@ def notion_to_markdown(blocks, post_dir=None, images=None):
             text = rich_text_to_markdown(block['heading_3']['rich_text'])
             markdown.append(f'#### {text}\n')
         # Lists
-        elif block_type == 'bulleted_list_item':
-            text = rich_text_to_markdown(block['bulleted_list_item']['rich_text'])
-            markdown.append(f'- {text}\n')
-        elif block_type == 'numbered_list_item':
-            text = rich_text_to_markdown(block['numbered_list_item']['rich_text'])
-            markdown.append(f'1. {text}\n')
+        elif block_type in LIST_TYPES:
+            markdown.append(list_item_to_markdown(block, post_dir, images) + '\n')
         # Code blocks
         elif block_type == 'code':
-            code = rich_text_to_markdown(block['code']['rich_text'])
+            # Plain text: bold/italic markers would show up literally inside a code block
+            code = ''.join(t['plain_text'] for t in block['code']['rich_text'])
             language = block['code']['language']
             markdown.append(f'```{language}\n{code}\n```\n')
         # Quotes
         elif block_type == 'quote':
             text = rich_text_to_markdown(block['quote']['rich_text'])
-            markdown.append(f'> {text}\n')
+            markdown.append('> ' + text.replace('\n', '\n> ') + '\n')
         # Images
         elif block_type == 'image':
             image = block['image']
@@ -214,24 +242,41 @@ def rich_text_to_markdown(rich_text):
     """Convert Notion rich text to markdown formatting"""
     if not rich_text:
         return ''
-    result = []
+    # Notion splits text into many runs (for colour, links, edits...). Merge
+    # neighbours that look the same in markdown, or "*a**b*" breaks italics.
+    runs = []
     for text_obj in rich_text:
-        text = text_obj['plain_text']
-        annotations = text_obj['annotations']
-        # Apply markdown formatting
-        if annotations['bold']:
-            text = f'**{text}**'
-        if annotations['italic']:
-            text = f'*{text}*'
-        if annotations['code']:
-            text = f'`{text}`'
-        if annotations['strikethrough']:
-            text = f'~~{text}~~'
-        # Handle links
-        if text_obj.get('href'):
-            text = f'[{text}]({text_obj["href"]})'
-        result.append(text)
+        a = text_obj['annotations']
+        key = (a['bold'], a['italic'], a['strikethrough'], a['code'], text_obj.get('href'))
+        if runs and runs[-1][0] == key:
+            runs[-1][1] += text_obj['plain_text']
+        else:
+            runs.append([key, text_obj['plain_text']])
+
+    result = []
+    for (bold, italic, strike, code, href), text in runs:
+        core = text.strip()
+        if not core:
+            result.append(text)
+            continue
+        # Markers must touch the text: "*word *" is not italic in markdown, but
+        # Notion often puts the space inside the italic run. Keep it outside.
+        lead = text[:len(text) - len(text.lstrip())]
+        trail = text[len(text.rstrip()):]
+        if code:
+            core = f'`{core}`'
+        if bold:
+            core = f'**{core}**'
+        if italic:
+            core = f'*{core}*'
+        if strike:
+            core = f'~~{core}~~'
+        if href:
+            core = f'[{core}]({href})'
+        result.append(f'{lead}{core}{trail}')
     return ''.join(result)
+
+
 def extract_properties(page):
     """Extract front matter properties from Notion page"""
     props = page['properties']
