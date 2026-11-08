@@ -6,7 +6,7 @@ tags: []
 categories: ["Uncategorized"]
 draft: false
 notion_id: "410ed4a0-c125-803d-866f-ec750eda6f43"
-notion_edited: "2026-11-08T00:17:00.000Z"
+notion_edited: "2026-11-08T17:31:00.000Z"
 ---
 *There are two ways to calculate the age of the universe. They give different answers, and the disagreement is growing.*
 
@@ -26,7 +26,7 @@ Her conclusion was that these stars have a *"period-luminosity relation"*, where
 
 ![Image](image-d39e3aa7f26c.png)
 
-*Image: Plot from a *[*paper*](https://articles.adsabs.harvard.edu/pdf/1912HarCi.173....1L)* prepared by Leavitt in 1912. Magnitude vs log period of 25 Cepheids. There are two trend lines showing the maximum and minimum brightness for each Cepheid.*
+*Image: Plot from a* [*paper*](https://articles.adsabs.harvard.edu/pdf/1912HarCi.173....1L) *prepared by Leavitt in 1912. Magnitude vs log period of 25 Cepheids. There are two trend lines showing the maximum and minimum brightness for each Cepheid.*
 
 Astronomers Ejnar Hertzsprung and Harlow Shapley took this trend one step further by estimating how far various Cepheids were from Earth, using geometric methods like stellar parallax.
 
@@ -90,7 +90,7 @@ A Type Ia supernova is the thermonuclear explosion of a white dwarf in a binary 
 
 ![Image](image-86a487bc7bd1.png)
 
-*Image: Hubble Space Telescope images of galaxies that are hosts to both Cepheid variables and Type Ia supernovae. Credit: *[*NASA*](https://science.nasa.gov/mission/hubble/science/science-behind-the-discoveries/hubble-constant-and-tension/)*, ESA, Adam G. Riess (STScI, JHU)*
+*Image: Hubble Space Telescope images of galaxies that are hosts to both Cepheid variables and Type Ia supernovae. Credit:* [*NASA*](https://science.nasa.gov/mission/hubble/science/science-behind-the-discoveries/hubble-constant-and-tension/)*, ESA, Adam G. Riess (STScI, JHU)*
 
 To make the link between Cepheids and Type Ia supernovae, about 40 galaxies have been identified that host both a well-observed Type Ia supernova and Cepheids. 
 
@@ -122,11 +122,11 @@ The CMB was discovered by accident in 1964 at Bell Labs using a horn antenna bui
 
 ![Image](image-3aaa55787d2c.png)
 
-*Image: The *[*Holmdel Horn Antenna*](https://en.wikipedia.org/wiki/Holmdel_Horn_Antenna)* on which Penzias and Wilson discovered the cosmic microwave background. *[*NASA*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Horn_Antenna-in_Holmdel,_New_Jersey_-_restoration1.jpg)
+*Image: The* [*Holmdel Horn Antenna*](https://en.wikipedia.org/wiki/Holmdel_Horn_Antenna) *on which Penzias and Wilson discovered the cosmic microwave background.* [*NASA*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Horn_Antenna-in_Holmdel,_New_Jersey_-_restoration1.jpg)
 
 ![Image](image-88e20098e497.png)
 
-*A pigeon trap, on view at the Air and Space Museum, used by Nobel Prize winners Penzias and Wilson to remove the birds roosting in the radio antenna's large horn. NASM/*[*SI*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Horn_Antenna-in_Holmdel,_New_Jersey_-_restoration1.jpg)* loaned from Robert Wilson*
+*A pigeon trap, on view at the Air and Space Museum, used by Nobel Prize winners Penzias and Wilson to remove the birds roosting in the radio antenna's large horn. NASM/*[*SI*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Horn_Antenna-in_Holmdel,_New_Jersey_-_restoration1.jpg) *loaned from Robert Wilson*
 
 But no matter what they did, they couldn’t suppress a low, steady, mysterious noise, present day and night, evenly spread over the sky.
 
@@ -134,23 +134,23 @@ And this light can provide another way to measure distances in the sky, infer th
 
 ![Image](image-17fff6457d31.png)
 
-*Image: *[*CMB*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Cosmic_Microwave_Background_(CMB).jpeg.jpeg))* measured by the Planck spacecraft*
+*Image:* [*CMB*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Cosmic_Microwave_Background_(CMB).jpeg.jpeg)) *measured by the Planck spacecraft*
 
 The CMB is the oldest light in the universe, released about 380,000 years after the Big Bang. These photons were released from the hot, dense plasma of photons and matter when atoms first began to form in a process called ‘recombination’. The photons of the CMB are still the vast majority of photons in the universe, outnumbering other photons by around 400 to one.
 
 As a result, this light is a snapshot of recombination, when those photons were released from the plasma. Within the CMB, very slight variations — of roughly one part in 100,000 — have been caused by ripples of pressure that were propagating through the plasma before recombination.
 
-These ripples had 380,000 years to travel before they stopped. And because we know the composition of the plasma (it’s possible to calculate it very accurately from the CMB) we can work out how fast the ripples were travelling over that 380,000 years.  This gives a fixed radius for the sound horizon of 0.14 Mpc. This pattern in the CMB has been mapped in detail by satellites like COBE, WMAP, and Planck.
+These ripples are called baryon acoustic oscillations (BAO), and they are very useful for constraining the value of H₀ using the CMB.
+
+These ripples had 380,000 years to travel before they stopped. And because we know the composition of the plasma (it’s possible to calculate it very accurately from the CMB) we can work out how fast the ripples were travelling over that 380,000 years.  This gives a fixed radius for the sound horizon of 0.14 Mpc. This pattern of BAO in the CMB has been mapped in detail by satellites like COBE, WMAP, and Planck.
 
 We also know that the CMB temperature was about [2892 K at the drag epoch, compared with 2.7255 K today](https://pdg.lbl.gov/2023/reviews/rpp2023-rev-cosmic-microwave-background.pdf) — which tells us that there has been a stretch of a factor of 1,061. At the time the BAO sound horizon was set, it was about 0.139 Mpc, corresponding to about 147 Mpc today.
 
 What’s amazing — and gives us a standard ruler we can use — is that the ripple structure has also been detected in the in the large-scale distribution of galaxies. Looking deep into space, cosmologists can find statistical evidence that pairs of galaxies are more likely to be found at a certain distance ‘r’. In other words, the pattern of ripples present at the time of recombination has persisted in the matter of the universe.
 
-These ripples are called baryon acoustic oscillations (BAO), and they are very useful for constraining the value of H₀ using the CMB.
-
 ![Image](image-65481aacb768.png)
 
-*Image: Illustration of BAO ‘bubbles’ of galaxies. They don’t really look like this, but they are detectable statistically. (A single BAO bubble has potentially been identified, named Hoʻoleilana.) As the universe expands, this characteristic distance expands too, allowing us to measure the Hubble constant as well as the dark matter density and even the scalar spectral index. *[*Credit*](https://www.sdss3.org/press/onepercent.php)*: Zosia Rostomian, LBNL*
+*Image: Illustration of BAO ‘bubbles’ of galaxies. They don’t really look like this, but they are detectable statistically. (A single BAO bubble has potentially been identified, named Hoʻoleilana.) As the universe expands, this characteristic distance expands too, allowing us to measure the Hubble constant as well as the dark matter density and even the scalar spectral index.* [*Credit*](https://www.sdss3.org/press/onepercent.php)*: Zosia Rostomian, LBNL*
 
 ![Image](image-3429b5906e8d.png)
 
@@ -161,7 +161,6 @@ Astrophysicists can use this data and the standard ruler to build a 3D map of th
 Two measurements are taken for thousands of galaxies:
 
 1. their angular position in the sky
-
 1. their redshift
 
 Using these together, it is possible to build a 3D map that maximises the correlation between galaxy pairs separated by the expanded sound horizon distance of 147 Mpc.
@@ -196,13 +195,13 @@ And it’s getting worse: the more precise our measurements of either the local 
 
 ![Image](image-7da0d366f1fb.png)
 
-*Image: The Hubble tension is increasing with time. Credit: Perivolaropoulos and Skara *
+*Image: The Hubble tension is increasing with time. Credit: Perivolaropoulos and Skara* 
 
 And these measurements are repeatable: direct measurements of the local, late universe tend to clump around 73 km/s/Mpc, and surveys of the distant, early universe tend to clump around 67 km/s/Mpc.
 
 ![Image](image-5af70a07ebc4.png)
 
-*Image: *[*Summary of H₀ estimates circa 2025*](https://en.wikipedia.org/wiki/Hubble%27s_law#/media/File:1-s2.0-S221268642500158X-gr1_lrg.jpg)
+*Image:* [*Summary of H₀ estimates circa 2025*](https://en.wikipedia.org/wiki/Hubble%27s_law#/media/File:1-s2.0-S221268642500158X-gr1_lrg.jpg)
 
 To get an idea of how scientists are thinking about this…
 
@@ -212,7 +211,7 @@ From the Riess 2022 paper: [https://arxiv.org/pdf/2112.04510](https://arxiv.org/
 
  From the Planck 2018 paper: [https://arxiv.org/abs/1807.06209](https://arxiv.org/abs/1807.06209)
 
-> None of the extended models that we have studied in this paper convincingly resolves the tension with the *Riess et al. *value of H₀.
+> None of the extended models that we have studied in this paper convincingly resolves the tension with the *Riess et al.* value of H₀.
 
 ## The uncertain age of the universe
 
@@ -240,7 +239,7 @@ Perhaps the distance ladder is wrong: maybe the Cepheids or SN1as are a ‘bad b
 
 Or maybe the BAO scale is wrong: perhaps there is some unusual physics that means we’ve miscalculated the size of the sound horizon when the CMB was emitted (reducing it by 10 Mpc, for example, would lead to a value of H₀ matching the SH0ES data).
 
-But there is also a third way: the link between the early and late universe measurements — the ΛCDM model — could be the problem. This is the most exciting prospect for physicists because it’d mean ‘new physics’: things like* sterile neutrinos*, *dark radiation*, or *early dark energy*, which could all potentially shift H₀.
+But there is also a third way: the link between the early and late universe measurements — the ΛCDM model — could be the problem. This is the most exciting prospect for physicists because it’d mean ‘new physics’: things like *sterile neutrinos*, *dark radiation*, or *early dark energy*, which could all potentially shift H₀.
 
 Arguing about these hypotheticals helps to keep the physicists busy.
 
@@ -257,11 +256,8 @@ However, I think it is quite instructive to consider what this methodology invol
 What can we find out about it?
 
 - **radius**: we know from the CMB that its radius is equivalent to the sound horizon, 147 Mpc
-
 - **redshift**: we can measure its redshift from us
-
 - **depth**: we can measure its depth in terms of the gap in redshift from the nearest to the farthest part of the bubble
-
 - **width**: we can measure its width as a number of degrees it takes up in the sky
 
 ### Depth: along our line of sight
