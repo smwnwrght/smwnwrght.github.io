@@ -6,7 +6,7 @@ tags: []
 categories: ["Uncategorized"]
 draft: false
 notion_id: "410ed4a0-c125-803d-866f-ec750eda6f43"
-notion_edited: "2026-11-08T17:31:00.000Z"
+notion_edited: "2026-11-08T17:38:00.000Z"
 ---
 *There are two ways to calculate the age of the universe. They give different answers, and the disagreement is growing.*
 
@@ -134,7 +134,7 @@ And this light can provide another way to measure distances in the sky, infer th
 
 ![Image](image-17fff6457d31.png)
 
-*Image:* [*CMB*](https://en.wikipedia.org/wiki/Cosmic_microwave_background#/media/File:Cosmic_Microwave_Background_(CMB).jpeg.jpeg)) *measured by the Planck spacecraft*
+*Image:* [*CMB*](https://commons.wikimedia.org/wiki/File:Cosmic_Microwave_Background_(CMB).jpeg) *measured by the Planck spacecraft*
 
 The CMB is the oldest light in the universe, released about 380,000 years after the Big Bang. These photons were released from the hot, dense plasma of photons and matter when atoms first began to form in a process called ‘recombination’. The photons of the CMB are still the vast majority of photons in the universe, outnumbering other photons by around 400 to one.
 
